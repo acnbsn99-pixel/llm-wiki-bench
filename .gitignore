@@ -16,19 +16,14 @@ env/
 # Logs
 *.log
 
-# IDE
+# Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 
 # Build artifacts
-dist/
 build/
-*.o
-*.obj
-*.so
-*.a
-*.dll
-*.exe
+dist/
+target/
 ```

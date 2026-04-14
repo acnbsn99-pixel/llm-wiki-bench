@@ -13,11 +13,11 @@ import sys
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from data.models import Document, DocumentPage, Question, QuestionType, AnswerType
-from rag.pipeline import RAGPipeline
-from rag.chunker import Chunker
+from src.data.models import Document, DocumentPage, Question, QuestionType, AnswerType
+from src.rag.pipeline import RAGPipeline
+from src.rag.chunker import Chunker
 
 
 def create_sample_document() -> Document:
@@ -86,7 +86,7 @@ def main():
     # Initialize RAG pipeline
     print("\n3. Initializing RAG pipeline...")
     print(f"   - API Base: {api_base}")
-    print(f"   - Embedding model: text-embedding-3-small")
+    print(f"   - Embedding model: text-embedding-3-large")
     print(f"   - Retrieval k: 5")
     
     try:

@@ -113,10 +113,11 @@ class LLMClient:
         Returns:
             Raw litellm response object
         """
-        # Use custom_llm_provider to force OpenAI-compatible API call
-        # This tells litellm to treat our custom endpoint as OpenAI-compatible
+        # Use openai/ prefix to force OpenAI-compatible API call
+        # This prevents litellm from trying to use provider-specific SDKs
+        # (e.g., gemini-* models would trigger Vertex AI without this prefix)
         return litellm_completion(
-            model=f"custom/{model}",
+            model=f"openai/{model}",
             messages=messages,
             max_tokens=max_tokens,
             temperature=temperature,

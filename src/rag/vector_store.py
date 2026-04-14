@@ -92,7 +92,7 @@ class FAISSVectorStore(VectorStore):
     Embeddings are generated via OpenAI-compatible API.
     """
     
-    def __init__(self, embedding_model: str = "text-embedding-3-small",
+    def __init__(self, embedding_model: str = "text-embedding-3-large",
                  api_base: Optional[str] = None,
                  api_key: Optional[str] = None):
         """Initialize the FAISS vector store.
@@ -124,13 +124,13 @@ class FAISSVectorStore(VectorStore):
         self._init_embedding_client()
     
     def _init_embedding_client(self):
-        """Initialize the embedding client."""
-        from openai import OpenAI
+        """Initialize the embedding client using litellm."""
+        import litellm
+        self._litellm = litellm
         
-        self._embed_client = OpenAI(
-            base_url=self.api_base,
-            api_key=self.api_key
-        )
+        # Store config for litellm calls
+        self.api_base = self.api_base
+        self.api_key = self.api_key
     
     def _get_embedding(self, text: str) -> List[float]:
         """Get embedding for a single text.
@@ -141,11 +141,14 @@ class FAISSVectorStore(VectorStore):
         Returns:
             Embedding vector as list of floats
         """
-        response = self._embed_client.embeddings.create(
-            input=text,
-            model=self.embedding_model
+        response = self._litellm.embedding(
+            model=self.embedding_model,
+            input=[text],
+            api_base=self.api_base,
+            api_key=self.api_key,
+            custom_llm_provider='openai'
         )
-        return response.data[0].embedding
+        return response.data[0]["embedding"]
     
     def _get_embeddings_batch(self, texts: List[str], batch_size: int = 32) -> List[List[float]]:
         """Get embeddings for multiple texts in batches.
@@ -161,11 +164,14 @@ class FAISSVectorStore(VectorStore):
         
         for i in range(0, len(texts), batch_size):
             batch = texts[i:i + batch_size]
-            response = self._embed_client.embeddings.create(
+            response = self._litellm.embedding(
+                model=self.embedding_model,
                 input=batch,
-                model=self.embedding_model
+                api_base=self.api_base,
+                api_key=self.api_key,
+                custom_llm_provider='openai'
             )
-            batch_embeddings = [item.embedding for item in response.data]
+            batch_embeddings = [item["embedding"] for item in response.data]
             all_embeddings.extend(batch_embeddings)
         
         return all_embeddings
@@ -309,7 +315,7 @@ class FAISSVectorStore(VectorStore):
         
         # Create instance
         store = cls(
-            embedding_model=config.get("embedding_model", "text-embedding-3-small"),
+            embedding_model=config.get("embedding_model", "text-embedding-3-large"),
             api_base=config.get("api_base")
         )
         
