@@ -116,9 +116,15 @@ llm-vs-rag-bench/
 - `src/trajectory/__init__.py` — Module exports
 - `scripts/test_trajectory_export.py` — Test script validating export against actual agent output patterns
 
-### Phase 7: CLI Integration [CURRENT]
+### Phase 7: CLI Integration [COMPLETED]
 **Objective:** Wire everything together in `main.py` using `typer`.
 **Requirement:** Prompt user for N docs and M questions. Run both pipelines. Output comparative report and save trajectories. Include `--dry-run` and `--verbose` flags.
+**Deliverables:**
+- `main.py` — CLI entrypoint with typer commands: benchmark, inspect-dataset, test-llm
+- Updated `requirements.txt` with typer dependency
+
+### Phase 8: [NEXT]
+**Objective:** TBD
 
 ---
 

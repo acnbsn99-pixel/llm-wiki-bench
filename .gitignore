@@ -10,34 +10,33 @@ venv/
 .venv/
 .ENV
 .ENV.local
-env.bak/
-venv.bak/
-.python-version
+.env
+.env.local
+.env.*
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage/
+htmlcov/
 
 # Build artifacts
 build/
 dist/
 *.egg-info/
-.sconsign.dblite
-._build/
-cover/
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.nox/
+.installed.cfg
+*.egg
 
 # Logs
 *.log
 
 # OS generated files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
 ```
