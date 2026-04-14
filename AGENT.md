@@ -108,11 +108,15 @@ llm-vs-rag-bench/
 - `src/evaluation/report.py` — ReportGenerator creates DataFrame, saves CSV, prints to console
 - `scripts/test_evaluation.py` — Test script with mock BenchmarkResults
 
-### Phase 6: Trajectory Export [CURRENT]
+### Phase 6: Trajectory Export [COMPLETED]
 **Objective:** Build JSONL exporter for SFT in `src/trajectory/`.
 **Requirement:** Format must strictly follow: `{"messages": [{"role": "system", "content": "..."}, {"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]}`
+**Deliverables:**
+- `src/trajectory/exporter.py` — TrajectoryExporter class that converts Trajectory dataclass to OpenAI JSONL format
+- `src/trajectory/__init__.py` — Module exports
+- `scripts/test_trajectory_export.py` — Test script validating export against actual agent output patterns
 
-### Phase 7: CLI Integration
+### Phase 7: CLI Integration [CURRENT]
 **Objective:** Wire everything together in `main.py` using `typer`.
 **Requirement:** Prompt user for N docs and M questions. Run both pipelines. Output comparative report and save trajectories. Include `--dry-run` and `--verbose` flags.
 
